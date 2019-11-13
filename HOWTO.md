@@ -3,27 +3,23 @@
 Clone this repository to the same folder where your project's base folder resides.
 Put this in your `build.gradle` and run the `gradlew publish` task.
 
+To PR a mod, copy the folder(s) over to the repository and commit.
+
 ```groovy
-task sourcesJar(type: Jar) {
-    from sourceSets.main.allJava
-    classifier = 'sources'
-}
-
-artifacts {
-    archives sourcesJar
-}
-
 apply plugin: 'maven-publish'
 publishing {
     publications {
         mavenJava(MavenPublication) {
+            // These should be the default ForgeGradle artifacts
+            // sourceJar is sometimes sourcesJar?
             artifact jar
-            artifact sourcesJar
+            artifact sourceJar
+            // artifact deobfJar
         }
     }
     repositories {
         maven {
-            url = file("../Forge-Maven")
+            url = "${projectDir}/maven"
         }
     }
 }
